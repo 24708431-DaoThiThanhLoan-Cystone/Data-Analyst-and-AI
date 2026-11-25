@@ -1,0 +1,126 @@
+#note bài:
+17/8:
+-phương sai (var), độ lệch chuẩn (std) trả lời cho câu hỏi: đến mean bao xa
+-var = 4 ➜ std = can(4) = 2
+
+-var = trung bình (bình phương khoảng cách đến mean)
+
+vd 6 7 7 7 8
+có mean là 7, mode là 7
+
+tìm hiểu vị trí, hình dáng, hiểu bảng, tìm tl vị trí 
+- độ nghiên
+
+24/8:
+**Dữ liệu chất lượng:
+- độ chính xác (accuracy): dữ liệu phản ánh sự đúng
+- sự đầy đủ (completeness)
+- sự nhất quán (consistency)
+- sự hợp lệ (validity)
+- tính kịp thời (timeliness) 
+- sự quy nhất (uniqueness)
+
+**Dữ liệu ko tốt:
+- missing data: thiếu/mất dữ liệu
+- invalid data: lỗi data (không hợp lệ)
+- inconsistent data: data không nhất quán 
+- inaccurate data: không chính xác
+- duplicate data: lặp data, trùng dữ liệu
+- outdated data/state data: dữ liệu cũ (lỗi thời ) >< realtime: dữ liệu mới 
+
+**
+- raw data: dữ liệu thô
+- cleaning data: tập trung vào sửa lỗi, dữ liệu tốt hơn dữ liệu thô (là con của data wrangling)
+➜ chỉ thay đổi dữ liệu, không thay đổi số cột (bảng giống cũ nhưng sạch hơn)
+
+- data wrangling: là cả 1 quá trình (sửa - hợp - biến đổi), dữ liệu thô đến dữ liệu có cấu trúc, dữ liệu sẳn sàng đưa vào dataset
+➜ dữ liệu phong phú hơn (có thể thay đổi số cột)
+
+**missing data detected: 
+C1: data sai ➜ xóa
+
+
+- MCAR : thiếu hoàn toàn ngẫu nhiên (vd : bị đổ cà phê không thấy dữ liệu)
+➜ xóa đi (có thể để lại fill cũng được, không sợ làm sai dữ liệu)
+- MAR : thiếu ngẫu nhiên có điều kiện (vd: ngại điền)
+➜ CẤM XÓA, fill thoải mái
+- NMAR: thiếu không có ngẫu nhiên (vd: muốn che giấu)
+➜ CẤM XÓA (nên note lại )
+
+- x: tập trung vào các điều kiện đầy đủ
+- y: biến khuyết thiếu
+- r: cờ hiệu khuyết thiếu (r ko phụ thuộc vào y, r phụ thuộc vào x)
+➜ để hiểu có bị thiếu dữ liệu hay không ➜ khi bảng sai có thể quay về cờ hiệu
+
+nếu y bị ảnh hưởng bởi x ➜ cấm xóa
+
+C2: data sai ➜ sửa = cách fill data khác
+
+- MCAR: fill = mean or median
+- MAR: fill = giá trị trung binh được lấy theo gom nhóm
+- NMAR: không được fill bừa bãi, dễ bị sai bản chất
+
+*cách lấy số điền vào
+- MCAR: định lượng: mean ( nếu đoán xứng), median (nếu lệch/có outlier)
+		định tính: mode
+- MAR:  định lượng: mean / median sau khi gom nhóm
+- NMAR: không cần quan tâm
+
+********
+7/9
+- skewness: chọn fill mean vì quyết định lệch phải hay trái
+
+- outlier:
++ liên tục: boxplot, histogram
++ phân loại: 
+ 
+- phân tích đơn biến
++ liên tục (số): describe()
++ phân loại (chữ): value_counts()
+
+- phân tích đa biến (phân tích mối quan hệ của các biến với nhau)
++ liên tục (số)  - liên tục (số) : corr(), heatmap (dễ nhìn hơn)
+➜ [-1(nghịch) 0 1(thuận)] ➜ mạnh : 0.7 -1 ; không liên quan: 0
++ liên tục (số) - phân loại (chữ): boxplot, violin, bar
++ phân loại (chữ) - phân loại (chữ): (hiếm gặp)  T-test, anova
+
+
+28/9
+linear: trả về 1 con số, mục đích dự đoán
+logistic: mục đích phân loại
+# nếu đữ liệu lệch phải, dùng gì để cân bằng
+cần 4 cái: x,y ; chia; gọi; kiểm thử; lưu.
+
+5/10
+toán văn kq
+A8	9	pass
+B7	8 	pass
+C4 	3	fail
+
+X
+7.5  8.5?
+Euclid...
+
+- kNN: như mình tin tưởng vào láng giềng, ko được = 1 láng giềng, sợ nhiễu vì ảnh hưởng kq dự đoán, nên chọn số lẻ; phục vụ dự đoán
+
+- k-mean(ko giám sát): lấy luôn cả nhiễu, cho K=2 sẽ hiểu là 2 cụm rồi xác định tâm rồi đo khỏang cách với tâm, hết bộ dữ liệu thì tính tâm mới, rất sợ giá trị nhiễu => cách xử lý: IQR, thay mean thành median; phục vụ dự đoán
+
+- DBScan: phân cụm theo mật độ; yêu cầu bán kính (Eps) và min_samples (số lượng tối thiểu trong cụm); ít sợ giá trị nhiễu; phục vụ vấn đề như quét dữ liệu thành 1 cụm, ko phục vụ dự đoán
+
+eps = 50, min_samples=3 => trong bán kính 50 có ít nhất 3
+
+Nên sử dụng DBScan trước rồi mới tới K-mean kNN
+
+vd: 	văn 8, toán 100
+	văn 6, toán 80
+-> 20
+
+- như vậy có 2 cách chuẩn hóa là:
+	+ min-max scaler (0-1): rất sợ giá trị nhiễu (công thức: (x-xmin)/(xmax-xmin))
+vd	7		8		9		100
+	0		0.01		0.02		1
+	+ standard (Z-score scaling): ko sợ giá trị nhiễu (công thức: (x-mean)/std) nên sử dụng cách này
+vd	7		8		9		100
+	-0.52	-0.5		-0.47	+1.5
+
+
